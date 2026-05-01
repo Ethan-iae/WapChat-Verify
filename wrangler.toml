@@ -1,0 +1,19 @@
+name = "wapchat-verify"
+main = "index.js"
+compatibility_date = "2024-04-01"
+
+# Automatically create a KV Namespace binding for the Worker
+# Note: You still need to create the KV namespace in your Cloudflare dashboard
+# and replace 'YOUR_KV_NAMESPACE_ID' with the actual ID.
+[[kv_namespaces]]
+binding = "VERIFY_KV"
+id = "7ed5c63610cc4e4c9761f68ba7ccd5dd"
+
+[vars]
+# 1. 如果你需要和 Python 主站联动，请在这里填入你主站的真实 API 域名
+# 例如: APPROVE_API = "https://你的主站域名.com/admin/approve"
+APPROVE_API = ""
+REJECT_API = ""
+
+# 2. 必须设置 ADMIN_SECRET 才能进入后台。
+# 请去 Cloudflare 网页控制台 -> Workers -> 你的服务 -> Settings -> Variables -> Secret 中添加 `ADMIN_SECRET`
