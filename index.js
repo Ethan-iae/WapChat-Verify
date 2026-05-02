@@ -289,7 +289,7 @@ export default {
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" /></head><body style="padding: 20px; font-family: sans-serif;"><h2>❌ 激活失败</h2><p>无法连接主站激活 MongoDB 的数据，因此验证站本地的记录被保留，以防止数据不一致。</p><p style="color: red;">错误详情：${e.message}</p><br/><br/><a href="/admin?token=${ADMIN_SECRET}" style="padding: 10px 20px; background: #007bff; color: white; text-decoration: none; border-radius: 5px;">返回后台</a></body></html>`, { headers: { "content-type": "application/xhtml+xml;charset=UTF-8" }, status: 500 });
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" /></head><body style="padding: 20px; font-family: sans-serif;"><h2>❌ 激活失败</h2><p>无法连接主站激活 MongoDB 的数据，因此验证站本地的记录被保留，以防止数据不一致。</p><p style="color: red;">错误详情：${escapeHtml(e.message)}</p><br/><br/><a href="/admin?token=${ADMIN_SECRET}" style="padding: 10px 20px; background: #007bff; color: white; text-decoration: none; border-radius: 5px;">返回后台</a></body></html>`, { headers: { "content-type": "application/xhtml+xml;charset=UTF-8" }, status: 500 });
                     }
 
                     const rawValue = await env.VERIFY_KV.get(accountStr);
@@ -305,7 +305,9 @@ export default {
                 }
                 return Response.redirect(`${url.origin}/admin?token=${ADMIN_SECRET}`, 302);
             } catch (err) {
-                return new Response(`❌ 激活时发生报错：${err.message}`, { headers: { "content-type": "application/xhtml+xml;charset=UTF-8" } });
+                return new Response(`<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>激活报错</title></head><body style="padding: 20px; font-family: sans-serif;"><h2>❌ 激活时发生报错</h2><p>${escapeHtml(err.message)}</p></body></html>`, { headers: { "content-type": "application/xhtml+xml;charset=UTF-8" } });
             }
         }
 
@@ -332,7 +334,7 @@ export default {
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" /></head><body style="padding: 20px; font-family: sans-serif;"><h2>❌ 拒绝失败</h2><p>无法连接主站删除 MongoDB 的数据，因此验证站本地的记录被保留，以防止数据不一致。</p><p style="color: red;">错误详情：${e.message}</p><br/><br/><a href="/admin?token=${ADMIN_SECRET}" style="padding: 10px 20px; background: #dc3545; color: white; text-decoration: none; border-radius: 5px;">返回后台</a></body></html>`, { headers: { "content-type": "application/xhtml+xml;charset=UTF-8" }, status: 500 });
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" /></head><body style="padding: 20px; font-family: sans-serif;"><h2>❌ 拒绝失败</h2><p>无法连接主站删除 MongoDB 的数据，因此验证站本地的记录被保留，以防止数据不一致。</p><p style="color: red;">错误详情：${escapeHtml(e.message)}</p><br/><br/><a href="/admin?token=${ADMIN_SECRET}" style="padding: 10px 20px; background: #dc3545; color: white; text-decoration: none; border-radius: 5px;">返回后台</a></body></html>`, { headers: { "content-type": "application/xhtml+xml;charset=UTF-8" }, status: 500 });
                     }
 
                     const rawValue = await env.VERIFY_KV.get(accountStr);
@@ -348,7 +350,9 @@ export default {
                 }
                 return Response.redirect(`${url.origin}/admin?token=${ADMIN_SECRET}`, 302);
             } catch (err) {
-                return new Response(`❌ 删除时发生报错：${err.message}`, { headers: { "content-type": "application/xhtml+xml;charset=UTF-8" } });
+                return new Response(`<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>删除报错</title></head><body style="padding: 20px; font-family: sans-serif;"><h2>❌ 删除时发生报错</h2><p>${escapeHtml(err.message)}</p></body></html>`, { headers: { "content-type": "application/xhtml+xml;charset=UTF-8" } });
             }
         }
 
@@ -399,7 +403,9 @@ export default {
 </style>
                 </head><body><div class="box"><h2>清理完成</h2><p>已处理 ${deletedCount} 条记录。</p><p>如有剩余请再次执行。</p><a href="/admin?token=${ADMIN_SECRET}" class="btn">返回后台</a></div></body></html>`, { headers: { "content-type": "application/xhtml+xml;charset=UTF-8" } });
             } catch (err) {
-                return new Response(`❌ 暴力清理报错：${err.message}`, { status: 500 });
+                return new Response(`<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>暴力清理报错</title></head><body style="padding: 20px; font-family: sans-serif;"><h2>❌ 暴力清理报错</h2><p>${escapeHtml(err.message)}</p></body></html>`, { headers: { "content-type": "application/xhtml+xml;charset=UTF-8" }, status: 500 });
             }
         }
 
@@ -534,7 +540,7 @@ export default {
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" /><title>系统错误</title></head><body style="padding:5px;font-family:sans-serif;"><h2 style="color:red;font-size:16px;">提交失败</h2><p>系统报错：<b>${err.message}</b></p><p>请检查 Cloudflare 设置。</p></body></html>`;
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" /><title>系统错误</title></head><body style="padding:5px;font-family:sans-serif;"><h2 style="color:red;font-size:16px;">提交失败</h2><p>系统报错：<b>${escapeHtml(err.message)}</b></p><p>请检查 Cloudflare 设置。</p></body></html>`;
                 return new Response(errorHtml, { headers: { "content-type": "application/xhtml+xml;charset=UTF-8" }, status: 500 });
             }
         }
@@ -612,7 +618,9 @@ export default {
 </style>
                 </head><body><div class="box"><h2>清理完成</h2><p>${msg}</p><a href="/admin?token=${ADMIN_SECRET}" class="btn">返回后台</a></div></body></html>`, { headers: { "content-type": "application/xhtml+xml;charset=UTF-8" } });
             } catch (err) {
-                return new Response(`❌ 清理时发生报错：${err.message}`, { status: 500 });
+                return new Response(`<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>清理报错</title></head><body style="padding: 20px; font-family: sans-serif;"><h2>❌ 清理时发生报错</h2><p>${escapeHtml(err.message)}</p></body></html>`, { headers: { "content-type": "application/xhtml+xml;charset=UTF-8" }, status: 500 });
             }
         }
 
