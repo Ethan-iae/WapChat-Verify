@@ -34,189 +34,103 @@ export default {
 
             const list = await env.VERIFY_KV.list();
 
-            let html = `<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+            let html = `<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
 <head>
-    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-
-
-    
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>管理后台 - 审核列表</title>
-    
     <style type="text/css">
-/* <![CDATA[ */
-
-        :root {
-            --primary: #000;
-            --bg: #f8f9fa;
-            --card-bg: #fff;
-            --text: #1a1a1a;
-            --text-muted: #666;
-            --border: #000;
-            --danger: #d00;
-            --warning: #b70;
-        }
-        * { box-sizing: border-box; }
         body { 
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+            font-family: "MS PGothic", Arial, Tahoma, sans-serif; 
             margin: 0; 
-            background: var(--bg); 
-            color: var(--text); 
-            line-height: 1.5; 
+            padding: 15px;
+            background: #e6e6e6; 
+            color: #333333; 
+            font-size: 12px;
+            line-height: 1.5;
         }
-        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
-        header { 
-            border-bottom: 3px solid var(--primary); 
-            margin-bottom: 30px; 
-            padding-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
+        .container { max-width: 600px; margin: 0 auto; }
+        .header { 
+            background: #a3a3a3; 
+            color: #ffffff; 
+            padding: 4px 8px; 
+            font-size: 11px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
         }
-        header h1 { margin: 0; font-size: 24px; font-weight: 800; letter-spacing: -0.5px; }
-        
-        .admin-tools { 
-            display: grid; 
-            grid-template-columns: 1fr 1fr; 
-            gap: 15px; 
-            margin-bottom: 30px; 
-        }
-        @media (max-width: 600px) { 
-            .admin-tools { grid-template-columns: 1fr; } 
-            header { flex-direction: column; align-items: flex-start; gap: 10px; }
-        }
-
-        .tool-card { 
-            background: var(--card-bg); 
-            border: 1px solid var(--primary); 
-            padding: 15px; 
-        }
-        .tool-card p { margin: 0 0 10px 0; font-size: 13px; font-weight: bold; }
-
-        .list-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
-            gap: 20px; 
-        }
-        @media (max-width: 350px) {
-            .list-grid { grid-template-columns: 1fr; }
-        }
-
         .card { 
-            background: var(--card-bg); 
-            border: 1px solid var(--primary); 
-            padding: 20px; 
-            display: flex; 
-            flex-direction: column; 
-            position: relative;
-        }
-        .card:hover { box-shadow: 4px 4px 0 var(--primary); }
-
-        .meta { 
-            font-size: 12px; 
-            color: var(--text-muted); 
+            background: #ffffff; 
+            border: 1px solid #cccccc; 
             margin-bottom: 15px; 
-            padding-bottom: 10px; 
-            border-bottom: 1px dashed #ccc; 
+            padding: 12px; 
         }
-        .meta div { margin-bottom: 2px; }
-        
-        .account-info { margin-bottom: 15px; }
-        .label { font-size: 11px; font-weight: bold; text-transform: uppercase; color: var(--text-muted); display: block; }
-        .account-name { font-size: 18px; font-weight: bold; color: var(--danger); word-break: break-all; }
-        
+        .meta { 
+            font-size: 10px; 
+            color: #777777; 
+            margin-bottom: 10px; 
+            padding-bottom: 8px; 
+            border-bottom: 1px dotted #cccccc; 
+        }
+        .meta div { display: inline-block; margin-right: 15px; }
+        .label { 
+            font-size: 11px; 
+            font-weight: bold; 
+            color: #cc0033;
+        }
+        .account-name { 
+            font-size: 14px; 
+            font-weight: bold; 
+            color: #333333; 
+            margin-left: 5px;
+        }
         .reason-box { 
-            background: #f0f0f0; 
             padding: 10px; 
-            font-size: 14px; 
-            margin-bottom: 20px; 
-            flex-grow: 1; 
+            background: #f9f9f9;
+            border: 1px solid #eeeeee;
+            color: #555555; 
+            margin: 10px 0; 
             white-space: pre-wrap;
-            border-left: 3px solid var(--primary);
         }
-
         .btn { 
-            display: inline-block;
-            width: 100%;
-            padding: 10px;
-            font-size: 13px;
-            font-weight: bold;
-            text-align: center;
-            text-decoration: none;
-            border: 1px solid var(--primary);
-            background: #fff;
-            color: var(--primary);
+            padding: 3px 8px;
+            font-size: 11px;
+            font-family: "MS PGothic", Arial, sans-serif;
+            border: 1px solid #999999;
+            background: #efefef;
+            color: #333333;
             cursor: pointer;
-            border-radius: 0;
-            transition: all 0.1s;
-            margin-bottom: 8px;
         }
-        .btn:hover { background: var(--primary); color: #fff; }
-        .btn-danger { color: var(--danger); border-color: var(--danger); }
-        .btn-danger:hover { background: var(--danger); color: #fff; }
-        .btn-warn { color: var(--warning); border-color: var(--warning); }
-        .btn-warn:hover { background: var(--warning); color: #fff; }
-        
-        .action-links { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
-        .action-links .btn { margin-bottom: 0; }
-
-        .warning-banner { 
-            background: #fff3cd; 
-            color: #856404; 
-            padding: 15px; 
-            border: 1px solid #ffeeba; 
-            margin-bottom: 20px; 
-            font-size: 14px; 
-            font-weight: bold;
+        .btn:hover { background: #dddddd; }
+        .action-links { 
+            border-top: 1px dotted #cccccc;
+            padding-top: 10px;
+            text-align: right;
         }
-        .empty-state { text-align: center; padding: 50px 20px; border: 2px dashed #ccc; color: #999; }
-    
-/* ]]> */
-</style>
+        .action-links form { display: inline; margin: 0 0 0 5px; }
+        .empty-state { text-align: center; padding: 30px; border: 1px dotted #cccccc; color: #777777; background: #ffffff; }
+        .warning-banner { background: #fff3cd; border: 1px solid #ffeeba; padding: 10px; margin-bottom: 15px; color: #856404; font-size: 12px; }
+    </style>
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>审核列表</h1>
-            <span style="font-size: 12px; font-weight: bold; background: #000; color: #fff; padding: 2px 6px;">ADMIN PANEL</span>
-        </header>
-
-        <div class="admin-tools">
-            <div class="tool-card">
-                <p>🛡️ 攻击防御</p>
-                <form method="POST" action="/admin/clear-all-attacks">
-                    <input type="hidden" name="token" value="${ADMIN_SECRET}" />
-                    <button type="submit" class="btn btn-danger" onclick="return confirm('确定要清空所有攻击记录吗？');">一键清理攻击记录</button>
-                </form>
-            </div>
-            <div class="tool-card">
-                <p>☢️ 终极清理</p>
-                <form method="POST" action="/admin/nuke-all">
-                    <input type="hidden" name="token" value="${ADMIN_SECRET}" />
-                    <button type="submit" class="btn btn-warn" onclick="return confirm('警告：这将删除所有待审核记录并同步 MongoDB！确定吗？');">暴力清空所有记录</button>
-                </form>
-            </div>
-        </div>
+        <div class="header">&gt;&gt; ADMIN PANEL : 审核列表</div>
 `;
 
             if (list.keys.length === 0) {
-                html += `<div class="empty-state"><h3>太棒了！</h3><p>目前没有积压的审核请求。</p></div>`;
+                html += `<div class="empty-state">目前没有积压的审核请求。</div>`;
             }
 
             const reversedKeys = list.keys.reverse();
             let subRequestCount = 0;
             const MAX_ALLOWED = 45;
 
-            html += `<div class="list-grid">`;
-
             for (const key of reversedKeys) {
                 const account = key.name;
                 if (account.startsWith("IP_")) continue;
 
                 if (subRequestCount >= MAX_ALLOWED) {
-                    html += `</div><div class="warning-banner">⚠️ 提示：由于 Cloudflare 限制，剩余记录未显示。请处理完当前记录后刷新。</div><div>`;
+                    html += `<div class="warning-banner">提示：由于限制，剩余记录未显示。请处理完当前记录后刷新。</div>`;
                     break;
                 }
 
@@ -231,39 +145,35 @@ export default {
                     data = { reason: rawValue, time: "旧数据", ip: "-", location: "-" };
                 }
 
-                const approveUrl = `${APPROVE_API}?token=${encodeURIComponent(ADMIN_SECRET)}&account=${encodeURIComponent(account)}`;
-                const rejectUrl = `${REJECT_API}?token=${encodeURIComponent(ADMIN_SECRET)}&account=${encodeURIComponent(account)}`;
-
                 html += `
                 <div class="card">
                     <div class="meta">
-                        <div>🕒 ${data.time || '-'}</div>
-                        <div>📍 ${data.location || '-'}</div>
-                        <div>🌐 ${data.ip || '-'}</div>
+                        <div>[ DATE ] ${data.time || '-'}</div>
+                        <div>[ LOC ] ${data.location || '-'}</div>
+                        <div>[ IP ] ${data.ip || '-'}</div>
                     </div>
-                    <div class="account-info">
-                        <span class="label">申请账号</span>
+                    <div>
+                        <span class="label">&gt;&gt; ACCOUNT</span>
                         <span class="account-name">${escapeHtml(account)}</span>
                     </div>
-                    <span class="label">留言内容</span>
                     <div class="reason-box">${escapeHtml(data.reason)}</div>
                     
                     <div class="action-links">
-                        <form method="POST" action="/admin/approve_action" style="margin: 0;">
-                            <input type="hidden" name="token" value="${ADMIN_SECRET}" />
-                            <input type="hidden" name="account" value="${account}" />
-                            <button type="submit" class="btn" style="background: #eef; border-color: #008;">1. 激活并清理</button>
+                        <form method="POST" action="/admin/approve_action">
+                            <input type="hidden" name="token" value="${ADMIN_SECRET}">
+                            <input type="hidden" name="account" value="${account}">
+                            <button type="submit" class="btn">激活并清理 (APPROVE)</button>
                         </form>
-                        <form method="POST" action="/admin/delete" style="margin: 0;">
-                            <input type="hidden" name="token" value="${ADMIN_SECRET}" />
-                            <input type="hidden" name="account" value="${account}" />
-                            <button type="submit" class="btn btn-danger" style="background: #fff3e0; border-color: #f60; color: #f60;">2. 拒绝并清理</button>
+                        <form method="POST" action="/admin/delete">
+                            <input type="hidden" name="token" value="${ADMIN_SECRET}">
+                            <input type="hidden" name="account" value="${account}">
+                            <button type="submit" class="btn" style="color: #cc0033;">拒绝并清理 (REJECT)</button>
                         </form>
                     </div>
                 </div>`;
             }
-            html += `</div></div></body></html>`;
-            return new Response(html, { headers: { "content-type": "application/xhtml+xml;charset=UTF-8" } });
+            html += `</div></body></html>`;
+            return new Response(html, { headers: { "content-type": "text/html;charset=UTF-8" } });
         }
 
         if (url.pathname === "/admin/approve_action" && request.method === "POST") {
@@ -356,58 +266,6 @@ export default {
             }
         }
 
-        if (url.pathname === "/admin/nuke-all" && request.method === "POST") {
-            try {
-                const formData = await request.formData();
-                if (formData.get("token") !== ADMIN_SECRET) return new Response("拒绝访问", { status: 403 });
-
-                const list = await env.VERIFY_KV.list();
-                let subRequestCount = 0;
-                let deletedCount = 0;
-
-                for (const key of list.keys) {
-                    const account = key.name;
-                    
-                    let needed = account.startsWith("IP_") ? 1 : 2;
-                    if (subRequestCount + needed > 48) break;
-
-                    if (!account.startsWith("IP_")) {
-                        try {
-                            const rejectUrl = `${REJECT_API}?token=${encodeURIComponent(ADMIN_SECRET)}&account=${encodeURIComponent(account)}`;
-                            await fetch(rejectUrl);
-                            subRequestCount++;
-                        } catch (e) {}
-                    }
-
-                    await env.VERIFY_KV.delete(account);
-                    subRequestCount++;
-                    deletedCount++;
-                }
-
-                return new Response(`<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-                
-                <style type="text/css">
-/* <![CDATA[ */
-
-                    body { font-family: sans-serif; padding: 40px 20px; text-align: center; background: #f8f9fa; }
-                    .box { display: inline-block; background: #fff; border: 2px solid #000; padding: 30px; max-width: 400px; width: 100%; }
-                    h2 { margin-top: 0; }
-                    .btn { display: block; margin-top: 20px; padding: 10px; background: #000; color: #fff; text-decoration: none; font-weight: bold; }
-                
-/* ]]> */
-</style>
-                </head><body><div class="box"><h2>清理完成</h2><p>已处理 ${deletedCount} 条记录。</p><p>如有剩余请再次执行。</p><a href="/admin?token=${ADMIN_SECRET}" class="btn">返回后台</a></div></body></html>`, { headers: { "content-type": "application/xhtml+xml;charset=UTF-8" } });
-            } catch (err) {
-                return new Response(`<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>暴力清理报错</title></head><body style="padding: 20px; font-family: sans-serif;"><h2>❌ 暴力清理报错</h2><p>${escapeHtml(err.message)}</p></body></html>`, { headers: { "content-type": "application/xhtml+xml;charset=UTF-8" }, status: 500 });
-            }
-        }
 
         if (request.method === "POST" && url.pathname === "/") {
 
@@ -545,84 +403,6 @@ export default {
             }
         }
 
-        if (url.pathname === "/admin/clear-all-attacks" && request.method === "POST") {
-            try {
-                const formData = await request.formData();
-                if (formData.get("token") !== ADMIN_SECRET) return new Response("拒绝访问", { status: 403 });
-
-                const list = await env.VERIFY_KV.list();
-                let subRequestCount = 0;
-                let deletedCount = 0;
-
-                for (const key of list.keys) {
-                    const account = key.name;
-                    if (account.startsWith("IP_")) continue;
-
-                    if (subRequestCount + 4 > 48) break; 
-
-                    subRequestCount++;
-                    const rawValue = await env.VERIFY_KV.get(account);
-                    if (!rawValue) continue;
-
-                    let isAttack = false;
-                    let clientIP = null;
-
-                    try {
-                        const data = JSON.parse(rawValue);
-                        const reason = data.reason ? data.reason.toLowerCase() : "";
-                        clientIP = data.ip;
-                        if (reason.includes("auth_err") || reason.includes("err_") || reason.includes("error")) {
-                            isAttack = true;
-                        }
-                    } catch (e) {
-                        if (rawValue.includes("auth_err") || rawValue.includes("err_")) {
-                            isAttack = true;
-                        }
-                    }
-
-                    if (isAttack) {
-                        try {
-                            const rejectUrl = `${REJECT_API}?token=${encodeURIComponent(ADMIN_SECRET)}&account=${encodeURIComponent(account)}`;
-                            await fetch(rejectUrl);
-                            subRequestCount++;
-                        } catch (e) {}
-
-                        await env.VERIFY_KV.delete(account);
-                        subRequestCount++;
-
-                        if (clientIP && clientIP !== "未知IP") {
-                            await env.VERIFY_KV.delete(`IP_${clientIP}`);
-                            subRequestCount++;
-                        }
-                        deletedCount++;
-                    }
-                }
-
-                let msg = `已处理 <b>${deletedCount}</b> 条攻击记录。如有剩余请再次点击。`;
-                return new Response(`<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-                
-                <style type="text/css">
-/* <![CDATA[ */
-
-                    body { font-family: sans-serif; padding: 40px 20px; text-align: center; background: #f8f9fa; }
-                    .box { display: inline-block; background: #fff; border: 2px solid #000; padding: 30px; max-width: 400px; width: 100%; }
-                    h2 { margin-top: 0; }
-                    .btn { display: block; margin-top: 20px; padding: 10px; background: #000; color: #fff; text-decoration: none; font-weight: bold; }
-                
-/* ]]> */
-</style>
-                </head><body><div class="box"><h2>清理完成</h2><p>${msg}</p><a href="/admin?token=${ADMIN_SECRET}" class="btn">返回后台</a></div></body></html>`, { headers: { "content-type": "application/xhtml+xml;charset=UTF-8" } });
-            } catch (err) {
-                return new Response(`<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>清理报错</title></head><body style="padding: 20px; font-family: sans-serif;"><h2>❌ 清理时发生报错</h2><p>${escapeHtml(err.message)}</p></body></html>`, { headers: { "content-type": "application/xhtml+xml;charset=UTF-8" }, status: 500 });
-            }
-        }
 
         const account = url.searchParams.get('account') || '未知';
         const safeAccount = escapeHtml(account);
