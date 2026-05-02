@@ -27,8 +27,6 @@ WapChatQQ/
     └── README.md                 # 审核后台部署说明 (本文档)
 ```
 
----
-
 ## 🚀 部署教程 (基于 Cloudflare Workers)
 
 ### 1. 准备工作
@@ -62,8 +60,6 @@ WapChatQQ/
 3. 运行 `wrangler deploy` 即可一键推送到线上。
 
 如果你没有 Node.js，也可以直接在 Cloudflare 网页端新建一个 Worker，然后把 `index.js` 的代码全选复制进去，并手动在 Settings 里绑定 KV 数据库（绑定变量名为 `VERIFY_KV`）和设置环境变量与 Secret。
-
----
 
 ## 👨‍💻 如何使用
 
