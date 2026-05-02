@@ -1,5 +1,7 @@
 # WapChat QQ - 独立验证与审核站 (VERIFY)
 
+![Cloudflare Workers](https://img.shields.io/badge/Cloudflare-Workers-F38020?logo=cloudflare&logoColor=white) ![Node.js](https://img.shields.io/badge/Node.js-JavaScript-339933?logo=nodedotjs&logoColor=white)
+
 这是一个基于 Cloudflare Workers + KV 数据库构建的独立验证与审核后台，作为 **wapQQ MAIN** (主站) 的配套设施使用。
 
 ## ✨ 核心功能
@@ -74,3 +76,7 @@ WapChatQQ/
 在 `wapQQ MAIN` 的设置或前端页面报错提示中，可以将验证地址指向：
 `https://你的审核站域名/?account=新注册账号名`
 用户即可在此页面填写申请理由并提交，数据将自动归集到管理后台中。
+
+## 📄 许可证 (License)
+
+本项目基于 [MIT](LICENSE) 协议开源。
