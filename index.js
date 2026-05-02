@@ -2,6 +2,15 @@ export default {
     async fetch(request, env, ctx) {
         const url = new URL(request.url);
 
+        const escapeHtml = (unsafe) => {
+            return String(unsafe)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        };
+
         // 1. 从 Cloudflare 环境变量/机密中读取
         const ADMIN_SECRET = env.ADMIN_SECRET;
         const APPROVE_API = env.APPROVE_API;
@@ -234,10 +243,10 @@ export default {
                     </div>
                     <div class="account-info">
                         <span class="label">申请账号</span>
-                        <span class="account-name">${account}</span>
+                        <span class="account-name">${escapeHtml(account)}</span>
                     </div>
                     <span class="label">留言内容</span>
-                    <div class="reason-box">${data.reason}</div>
+                    <div class="reason-box">${escapeHtml(data.reason)}</div>
                     
                     <div class="action-links">
                         <form method="POST" action="/admin/approve_action" style="margin: 0;">
@@ -608,6 +617,7 @@ export default {
         }
 
         const account = url.searchParams.get('account') || '未知';
+        const safeAccount = escapeHtml(account);
         const formHtml = `<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -676,12 +686,12 @@ export default {
     <body>
         <h2>安全验证</h2>
         <div class="container">
-            <p style="font-size: 12px; color: red;">账号 [<b>${account}</b>] 需要审核。</p>
+            <p style="font-size: 12px; color: red;">账号 [<b>${safeAccount}</b>] 需要审核。</p>
             <form method="POST" action="/">
                 <!-- 蜜罐陷阱：人类看不见，Bot 会自动填这个字段 -->
                 <input type="text" name="username" style="display:none !important;" tabindex="-1" autocomplete="off" />
                 
-                <input type="hidden" name="account" value="${account}" />
+                <input type="hidden" name="account" value="${safeAccount}" />
                 <label>请介绍一下您自己：</label>
                 <textarea name="reason" rows="3" required='required'></textarea>
                 <button type="submit">提 交 审 核</button>
