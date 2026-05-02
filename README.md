@@ -8,6 +8,25 @@
 * **一键审批 / 拒绝**：在后台点击按钮，即刻通过 API 联动主站的 MongoDB 数据库，完成放行或清理。
 * **安全防护**：内置表单蜜罐 (Honeypot)、IP 限流机制、禁用词过滤，并一键清理恶意攻击刷屏数据。
 
+## 📂 项目结构
+```text
+WapChatQQ/
+├── wapQQ MAIN/                   # 核心主干后端
+│   ├── app.py                    # 核心后端代码 (Flask 网页路由、API 与拦截逻辑)
+│   ├── Dockerfile                # 容器构建配置 (自动配置环境与 NapCatQQ 机器人)
+│   ├── requirements.txt          # Python 依赖清单
+│   ├── face_config.json          # 原生 QQ 小黄脸表情映射库
+│   ├── all_output_result_kmj.txt # 颜文字符号库
+│   ├── sensitive_words.txt       # 违禁词/敏感词拦截库
+│   └── README.md                 # 主站部署教程与说明文档
+└── wapQQ VERIFY/                 # 独立审核后台服务 (本项目当前目录)
+    ├── index.js                  # Cloudflare Worker 处理逻辑
+    ├── wrangler.toml             # Wrangler 部署配置
+    └── README.md                 # 审核后台部署说明 (本文档)
+```
+
+---
+
 ## 🚀 部署教程 (基于 Cloudflare Workers)
 
 ### 1. 准备工作
