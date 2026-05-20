@@ -11,12 +11,10 @@ export default {
                 .replace(/'/g, "&#039;");
         };
 
-        // 1. 从 Cloudflare 环境变量/机密中读取
         const ADMIN_SECRET = env.ADMIN_SECRET;
         const APPROVE_API = env.APPROVE_API;
         const REJECT_API = env.REJECT_API;
 
-        // 2. 检查必须的机密是否已配置
         if (!ADMIN_SECRET) {
             return new Response("系统配置错误：未设置 ADMIN_SECRET 环境变量/机密。", { status: 500, headers: { "content-type": "text/plain;charset=UTF-8" } });
         }
